@@ -120,7 +120,7 @@
 <div class="container" id="game-container" style="display:none;">
     <h2>Catch the Heart Game ❤️</h2>
     <p>Click on the heart as fast as you can! Score 10 to win.</p>
-    <img src="/img/heart.png" id="heart">
+    <img src="img/heart.png" id="heart">
     <p>Score: <span id="score">0</span></p>
 </div>
 
@@ -192,10 +192,11 @@ heart.addEventListener('click', () => {
     heart.style.transform = `scale(1.3) rotate(${Math.random()*30-15}deg)`;
     setTimeout(()=>{heart.style.transform = "scale(1) rotate(0deg)";}, 200);
 
-    if(score >= 10){
-        alert("🎉 You reached 10! Moving to next page.");
-        window.location.href = "main.html";  // change path if needed
-    }
+  if(score >= 10){
+    alert("🎉 You reached 10! Moving to next page.");
+    setTimeout(() => { window.location.href = "main.html"; }, 100);
+}
+
 });
 
 // Start first quiz
@@ -206,5 +207,6 @@ showQuiz();
     
 </body>
 </html>
+
 
 
