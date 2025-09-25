@@ -125,6 +125,8 @@
 </div>
 
 <script>
+window.onload = function() {
+
 const quizzes = [
     { q: "Where did we share our first hug?", options: ["Bus to Pune", "Park", "Temple", "Cafe"], answer: 0 },
     { q: "What is my favorite color?", options: ["Red", "Black", "Blue", "Green"], answer: 1 },
@@ -139,6 +141,7 @@ const quizzes = [
 ];
 
 let currentQuiz = 0;
+let score = 0;
 
 function showQuiz() {
     const q = quizzes[currentQuiz];
@@ -157,11 +160,9 @@ function showQuiz() {
 function checkAnswer(selected) {
     const q = quizzes[currentQuiz];
     const res = document.getElementById('quiz-result');
-    if (selected === q.answer) {
-        res.innerText = "🎉 Correct!";
-    } else {
-        res.innerText = "❌ Wrong! Try the next one.";
-    }
+    if (selected === q.answer) res.innerText = "🎉 Correct!";
+    else res.innerText = "❌ Wrong! Try the next one.";
+
     currentQuiz++;
     if(currentQuiz < quizzes.length){
         setTimeout(showQuiz, 1000);
@@ -173,54 +174,37 @@ function checkAnswer(selected) {
 function startGame() {
     document.getElementById('quiz-container').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
-    const heart = document.getElementById('heart');
     heart.style.display = 'block';
 }
 
-let heart = document.getElementById('heart');
-let score = 0;
-
+const heart = document.getElementById('heart');
 heart.addEventListener('click', () => {
     score++;
     document.getElementById('score').innerText = score;
 
-    // Heart animation
-    heart.style.transform = `scale(1.3) rotate(${Math.random()*30-15}deg)`;
-    setTimeout(()=>{heart.style.transform = "scale(1) rotate(0deg)";}, 200);
-
-    // Move heart randomly but inside viewport
+    // Move heart randomly inside viewport
     let x = Math.random() * (window.innerWidth - heart.offsetWidth - 10);
     let y = Math.random() * (window.innerHeight - heart.offsetHeight - 10);
     heart.style.left = x + "px";
     heart.style.top = y + "px";
 
-    if(score >= 10){
-        confetti({ particleCount: 150, spread: 70 }).then(()=>{
-            window.location.href = "/main.html";
-        });
-    }
+    // Animation
+    heart.style.transform = `scale(1.3) rotate(${Math.random()*30-15}deg)`;
+    setTimeout(()=>{heart.style.transform = "scale(1) rotate(0deg)";}, 200);
 
+    if(score >= 10){
+        alert("🎉 You reached 10! Moving to next page.");
+        window.location.href = "main.html";  // change path if needed
+    }
 });
 
-// Initialize first quiz
+// Start first quiz
 showQuiz();
 
-// Confetti effect
-function triggerConfetti() {
-    for(let i=0; i<100; i++){
-        const conf = document.createElement('div');
-        conf.classList.add('confetti');
-        conf.style.left = Math.random()*window.innerWidth+'px';
-        conf.style.background = `hsl(${Math.random()*360}, 100%, 70%)`;
-        conf.style.animationDuration = 2 + Math.random()*2 + 's';
-        conf.style.width = 5 + Math.random()*10 + 'px';
-        conf.style.height = conf.style.width;
-        document.body.appendChild(conf);
-        setTimeout(()=>{conf.remove()}, 4000);
-    }
-}
+};
 </script>
-
+    
 </body>
 </html>
+
 
